@@ -501,7 +501,7 @@ def main():
 
     with col2:
         st.markdown("&nbsp;")
-        st.title("4-HWWF Doctrine Status")
+        st.title("BKG-Q2 Doctrine Status")
     with col3:
         try:
             fit_summary = get_fit_summary()

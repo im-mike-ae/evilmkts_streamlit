@@ -18,7 +18,7 @@ The Winter Coalition Market Stats Viewer is a Streamlit application that provide
 ### 1. Market Stats Page
 ![Market Stats](images/wclogo.png)
 
-**Purpose:** Provides detailed market information for current sell orders on the 4-HWWF market. Includes history data for over 800 commonly used items and ships, with more detailed data available for Winter Co. doctrine items.
+**Purpose:** Provides detailed market information for current sell orders on the BKG-Q2 market. Includes history data for over 800 commonly used items and ships, with more detailed data available for Winter Co. doctrine items.
 
 The central dataframe displays all currently selected items. Currently, only sell orders are displayed however buy orders could be added later if there is interest.
 

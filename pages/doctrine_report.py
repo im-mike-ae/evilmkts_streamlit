@@ -389,7 +389,7 @@ def main():
             logger.warning("Logo image not found")
     with col2:
         st.title("Doctrine Report")
-        st.text("4-HWWF Market Status By Fleet Doctrine")
+        st.text("BKG-Q2 Market Status By Fleet Doctrine")
 
 
     # Fetch the data

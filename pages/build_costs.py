@@ -1113,7 +1113,7 @@ def main():
             percent_profit_vale = ((vale_price - low_cost) / vale_price) * 100
 
             st.markdown(
-                f"**4-HWWF price:** <span style='color: orange;'>{millify(vale_price, precision=2)} ISK</span> ({percent_profit_vale:.2f}% Jita | profit: {millify(profit_per_unit_vale, precision=2)} ISK)",
+                f"**BKG-Q2 price:** <span style='color: orange;'>{millify(vale_price, precision=2)} ISK</span> ({percent_profit_vale:.2f}% Jita | profit: {millify(profit_per_unit_vale, precision=2)} ISK)",
                 unsafe_allow_html=True,
             )
 
