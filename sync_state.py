@@ -20,12 +20,12 @@ def update_wcmkt_state()-> None:
 
     local_update = db.get_most_recent_update("marketstats",remote=False)
     local_update_status['updated'] = local_update
-    local_update_status['time_since'] = now - local_update
-    local_update_status['needs_update'] = local_update_status['time_since'] > timedelta(hours=2)
+    local_update_status['time_since'] = now - local_update if local_update else None
+    local_update_status['needs_update'] = local_update_status['time_since'] > timedelta(hours=2) if local_update_status['time_since'] else True
     remote_update = db.get_most_recent_update("marketstats",remote=True)
     remote_update_status['updated'] = remote_update
-    remote_update_status['time_since'] = now - remote_update
-    remote_update_status['needs_update'] = remote_update_status['time_since'] > timedelta(hours=2)
+    remote_update_status['time_since'] = now - remote_update if remote_update else None
+    remote_update_status['needs_update'] = remote_update_status['time_since'] > timedelta(hours=2) if remote_update_status['time_since'] else True
     logger.info("-"*60)
     st.session_state.local_update_status = local_update_status
     logger.info("local_status saved to session state:")

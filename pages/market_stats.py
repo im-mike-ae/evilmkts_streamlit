@@ -358,9 +358,12 @@ def check_db(manual_override: bool = False):
     else:
         if 'local_update_status' in st.session_state:
             local_update_since = st.session_state.local_update_status["time_since"]
-            local_update_since = local_update_since.total_seconds()
-            local_update_since = local_update_since // 60
-            local_update_since = f"{int(local_update_since)} mins"
+            if local_update_since:
+                local_update_since = local_update_since.total_seconds()
+                local_update_since = local_update_since // 60
+                local_update_since = f"{int(local_update_since)} mins"
+            else:
+                local_update_since = "never"
         else:
             local_update_since = DatabaseConfig("wcmkt").get_time_since_update("marketstats", remote=False)
         st.toast(f"DB updated: {local_update_since} ago", icon="✅")
@@ -547,7 +550,7 @@ def render_title_headers():
         wclogo = "images/wclogo.png"
         st.image(wclogo, width=125)
     with col2:
-        st.title("Winter Coalition Market Stats - 4-HWWF Market")
+        st.title("Insidious Market Stats - BKG-Q2 Market")
 
 @st.fragment
 def display_downloads():

@@ -340,19 +340,28 @@ class DatabaseConfig:
         alias = self.alias
         with self.remote_engine.connect() as conn:
             result = conn.execute(text("SELECT MAX(last_update) FROM marketstats")).fetchone()
-            remote_last_update = datetime.strptime(result[0], '%Y-%m-%d %H:%M:%S.%f').replace(tzinfo=timezone.utc)
+            remote_last_update = datetime.strptime(result[0], '%Y-%m-%d %H:%M:%S.%f').replace(tzinfo=timezone.utc) if result[0] else None
             conn.close()
         with self.engine.connect() as conn:
             result = conn.execute(text("SELECT MAX(last_update) FROM marketstats")).fetchone()
-            local_last_update = datetime.strptime(result[0], '%Y-%m-%d %H:%M:%S.%f').replace(tzinfo=timezone.utc)
+            local_last_update = datetime.strptime(result[0], '%Y-%m-%d %H:%M:%S.%f').replace(tzinfo=timezone.utc) if result[0] else None
             conn.close()
         logger.info("-"*40)
         logger.info(f"alias: {alias} validate_sync()")
         timestamp = datetime.now(tz=timezone.utc)
         local_timestamp = datetime.now(tz=ZoneInfo('US/Eastern'))
         logger.info(f"time: {local_timestamp.strftime('%Y-%m-%d %H:%M:%S')} (local); {timestamp.strftime('%Y-%m-%d %H:%M:%S')} (utc)")
-        logger.info(f"REMOTE LAST UPDATE: {remote_last_update.strftime('%Y-%m-%d %H:%M')} | Minutes ago: {round((timestamp-remote_last_update).total_seconds() / 60, 0)}")
-        logger.info(f"LOCAL LAST UPDATE: {local_last_update.strftime('%Y-%m-%d %H:%M')} | Minutes ago: {round((timestamp-local_last_update).total_seconds() / 60, 0)}")
+
+        if remote_last_update:
+            logger.info(f"REMOTE LAST UPDATE: {remote_last_update.strftime('%Y-%m-%d %H:%M')} | Minutes ago: {round((timestamp-remote_last_update).total_seconds() / 60, 0)}")
+        else:
+            logger.info(f"REMOTE LAST UPDATE: None (empty database)")
+
+        if local_last_update:
+            logger.info(f"LOCAL LAST UPDATE: {local_last_update.strftime('%Y-%m-%d %H:%M')} | Minutes ago: {round((timestamp-local_last_update).total_seconds() / 60, 0)}")
+        else:
+            logger.info(f"LOCAL LAST UPDATE: None (empty database)")
+
         logger.info("-"*40)
         validation_test = remote_last_update == local_last_update
         logger.info(f"validation_test: {validation_test}")
